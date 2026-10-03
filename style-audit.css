@@ -1,0 +1,95 @@
+/* ELEV8MI v31 style audit (E8-06). Loaded last. See STYLE-AUDIT.md.
+   Only type styles (family, case, weight, tracking, colour) change here, plus
+   the new footer and social icons. Wording is never changed. */
+
+/* 1. Tokens: the only text colours and font families used by the page UI. */
+:root{
+  --text:var(--parchment);          /* #F5F0FA headings, controls, nav */
+  --text-soft:#efe4ff;              /* body copy and form text */
+  --text-muted:var(--muted);        /* #c9b7e0 secondary notes and hints */
+  --accent:var(--gold);             /* #FFD700 kickers, card labels, prices */
+  --on-accent:#1f0e2e;              /* text on gold buttons */
+  --error:#ffb3bd;                  /* validation messages */
+  --success:#b8f5c8;
+  --font-display:"Cinzel Decorative","Cinzel",serif; /* h1, section titles */
+  --font-caps:"Cinzel",serif;                         /* nav links, dialog titles, reading-style select */
+  --font-serif:"Cormorant Garamond",serif;            /* long-form prose */
+  --font-sans:"Plus Jakarta Sans",system-ui,sans-serif; /* UI: kickers, labels, buttons, forms */
+  --font-script:var(--font-serif);  /* Dancing Script was never loaded; no element uses it */
+  --track-kicker:.2em;
+  --track-label:.08em;
+  --track-button:.12em;
+}
+
+/* 2. Form controls inherit the site fonts (several fell back to Arial). */
+button,input,select,textarea{font-family:var(--font-sans)}
+
+/* 3. Headings: sentence case (the wording is already sentence case). */
+.hero h1,.hero h1 .one-line,.section-title,section h3,dialog h2,dialog h3,.contact h3,
+.send-reading h3,#bookingFormTitle{text-transform:none}
+.section-title{font-family:var(--font-display);font-weight:700;color:var(--text)}
+dialog h2{font-family:var(--font-caps);font-weight:600;font-size:1.35rem;letter-spacing:.04em;color:var(--text)}
+/* Small gold card headings (sessions, notes, contact, form titles). */
+section h3,.contact h3,.send-reading h3{font-family:var(--font-sans);font-weight:700;letter-spacing:.06em;color:var(--accent)}
+
+/* Contact-card titles (Email, Instagram, Website, Phone, Where) are labels, not headings. */
+.contact h3{text-transform:uppercase;letter-spacing:var(--track-kicker);font-size:.74rem}
+
+/* 4. Kickers: uppercase, tracked, sans. */
+.section-sub,.scroll-invitation,.journey-caption,.load-kicker{text-transform:uppercase;letter-spacing:var(--track-kicker)}
+.section-sub{font-family:var(--font-sans);font-weight:500;color:var(--accent)}
+.scroll-invitation,.journey-caption{font-family:var(--font-sans);font-weight:500;color:var(--text)}
+
+/* 5. Field labels: uppercase, lightly tracked, sans. */
+.send-reading label:not(.booking-option),.booking-choices legend,#interpretDialog > label,.question-label{
+  font-family:var(--font-sans);font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:var(--track-label);color:var(--text-soft)}
+.send-reading .optional{text-transform:none;letter-spacing:0;font-weight:400;color:var(--text-muted)}
+.hp-field label{text-transform:none}
+.reading-steps b{font-family:var(--font-sans);font-weight:700;text-transform:uppercase;letter-spacing:var(--track-label);color:var(--text)}
+
+/* 6. Buttons and button-like links: one case, weight and tracking. */
+.btn,.spread-row button,.draw-row button,.copy-row button,.reading-help,.interpret-send,.interpret-email,
+.interpret-download,#beginReading,#continueReading,#replay,#bookSubmit{
+  font-family:var(--font-sans);font-weight:700;text-transform:uppercase;letter-spacing:var(--track-button)}
+.interpret-send,#beginReading,#continueReading,.reading-help,.interpret-email,.interpret-download{font-size:.78rem}
+.interpret-send,.interpret-email{color:var(--on-accent)}
+.copy-row button:not(.on),.reading-help,.interpret-download,#continueReading,#replay{color:var(--text)}
+#closeReadingGuide,#closeInterpret{font-family:var(--font-sans);color:var(--text)}
+
+/* 7. Nav pill and sound menu: nav links in Cinzel caps, controls in sans caps. */
+header nav a{font-family:var(--font-caps);font-weight:600;text-transform:uppercase;letter-spacing:var(--track-button);color:var(--text)}
+#soundMenuLabel,.sound-menu [role="menuitemradio"]{font-family:var(--font-sans);font-weight:600;text-transform:uppercase;letter-spacing:var(--track-button)}
+.sound-menu [role="menuitemradio"]{color:var(--text)}
+.sound-menu [role="menuitemradio"][aria-checked="true"]{color:var(--accent)}
+.tuner .hz{font-family:var(--font-sans);text-transform:none;color:var(--text)} /* "Hz" is a unit: keep its case */
+.reading-style{font-family:var(--font-caps)}
+
+/* 8. Body text colours. */
+main section:not(.hero) p:not(.section-sub):not(.scroll-invitation):not(.field-error):not(.send-status),.booking-intro,
+#readingGuide p,#interpretDescription,.send-intro,.option-name,.reading-steps span{color:var(--text-soft)}
+.lede,.deck-note,.option-detail,.interpret-or,.interpret-note,#readingGuide p.note{color:var(--text-muted)}
+.option-price{color:var(--accent)}
+.field-error{color:var(--error)}
+
+/* 9. Footer: every item on its own line, centred. */
+footer{display:flex;flex-direction:column;align-items:center;gap:.55rem;text-transform:uppercase;letter-spacing:var(--track-kicker);font-family:var(--font-sans);color:var(--text)}
+footer .footer-line{margin:0;text-align:center}
+footer #replay{margin-top:.35rem}
+
+/* 10. Social icons (footer and Find Allison): gold outline, 44 px targets. */
+.social-links{list-style:none;display:flex;justify-content:center;flex-wrap:wrap;gap:.6rem;padding:0}
+.social-links li{display:block}
+.social-icon{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;
+  color:var(--accent);border:1px solid var(--line);background:rgba(255,215,0,.04);
+  transition:background-color .2s ease,color .2s ease,box-shadow .2s ease,border-color .2s ease}
+.social-icon svg{width:22px;height:22px;display:block}
+.social-icon:hover{background:rgba(255,215,0,.16);border-color:var(--gold);color:var(--gold-soft);box-shadow:0 0 14px rgba(255,215,0,.35)}
+.social-icon:focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px;border-color:var(--gold);color:var(--gold-soft)}
+.contact .contact-icon{margin-top:.2rem}
+@media (prefers-reduced-motion:reduce){.social-icon{transition:none}}
+
+/* 11. Image credit (CC BY 4.0), one small kicker line in the footer. */
+footer .footer-credit{font-size:.58rem;letter-spacing:.16em;color:var(--text-muted)}
+footer .footer-credit a{color:inherit;text-decoration:underline;text-decoration-color:rgba(255,215,0,.35);text-underline-offset:3px}
+footer .footer-credit a:hover,footer .footer-credit a:focus-visible{color:var(--gold-soft)}
+footer .footer-credit a:focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px}

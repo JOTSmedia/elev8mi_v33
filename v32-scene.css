@@ -1,0 +1,53 @@
+/* v32 scene layout (E8-09), plus the v33 hero glow (E8-10) at the end.
+   Moon-phase pill: small, fixed in the bottom-right corner (v33, E8-12: in the
+   spot of the removed Pause motion button; reduced motion stays automatic).
+   Hero card: compact so it fits in the first screen under Earth and the orbits. */
+.moon-now.moon-pill{position:fixed;left:auto;top:auto;transform:none;
+  right:max(22px,calc(env(safe-area-inset-right) + 12px));
+  bottom:max(18px,env(safe-area-inset-bottom));min-height:44px;
+  z-index:29;width:auto;max-width:calc(100vw - 28px);gap:7px;padding:4px 11px 4px 5px;border-radius:999px;
+  background:rgba(7,9,22,.8);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transition:opacity .35s ease}
+.moon-now.moon-pill canvas{width:32px!important;height:32px!important}
+.moon-now.moon-pill > div{gap:1px}
+.moon-pill .moon-kicker{font-size:7px;letter-spacing:.14em}
+.moon-pill #moonPhaseName{font-size:11px;line-height:1.2}
+.moon-pill #moonPhaseInfo{font-size:8.5px;line-height:1.25}
+.moon-now.moon-pill.is-yielding{opacity:0;pointer-events:none}
+@media(max-width:720px){
+  .moon-now.moon-pill{right:max(14px,calc(env(safe-area-inset-right) + 8px));bottom:max(12px,env(safe-area-inset-bottom));padding:3px 9px 3px 4px}
+  .moon-now.moon-pill canvas{width:28px!important;height:28px!important}
+  .moon-pill #moonPhaseName{font-size:10px}
+  .moon-pill #moonPhaseInfo{font-size:8px}
+}
+/* Daytime sky: keep the small sky labels legible on a bright sky. */
+.solar-body.earth-location,.journey-caption{text-shadow:0 0 calc(var(--daylight,0) * 7px) rgba(4,8,30,calc(var(--daylight,0) * .9)),0 1px 2px rgba(0,0,0,calc(.35 + var(--daylight,0) * .55))}
+/* Hero card, compact first-screen layout. Same copy and order. */
+.hero-copy{max-width:min(1000px,calc(100vw - 48px));padding:.85rem 2rem .95rem}
+.hero h1{font-size:clamp(2.1rem,3.7vw,3.1rem);margin-bottom:.4rem}
+.hero .tag{font-size:clamp(1.1rem,1.6vw,1.35rem);margin-bottom:.45rem}
+.hero .lede{font-size:1.05rem;line-height:1.5;max-width:52rem;margin:0 auto .75rem}
+.hero .cta-row .btn{padding-top:.72rem;padding-bottom:.72rem}
+@media(max-width:720px){
+  .hero-copy{max-width:none;padding:.7rem .8rem .8rem}
+  .hero h1{font-size:1.5rem;line-height:1;margin-bottom:.3rem}
+  .hero .tag{font-size:1rem;line-height:1.3;margin-bottom:.3rem}
+  .hero .lede{font-size:.9rem;line-height:1.38;margin-bottom:.55rem}
+  .hero .cta-row{gap:.4rem}
+  .hero .cta-row .btn{padding:.62rem .75rem;font-size:.64rem}
+}
+/* v33 (E8-10): the hero logo glow follows the sky. Night keeps the loader-style
+   purple glow and dark corona unchanged. As --daylight rises (the same factor
+   that fades the WebGL day sky) the dark corona fades out and a soft
+   white-violet halo fades in, so the emblem stays crisp on the blue day sky.
+   Only while the WebGL sky runs; the 2D fallback sky stays night, so its glow does too. */
+:root:has(#journey[data-photo-motion="gpu"]) .solar-system .hero-sigil::before{opacity:calc(1 - var(--daylight,0))}
+:root:has(#journey[data-photo-motion="gpu"]) .solar-system .hero-sigil .hero-glow{filter:blur(8px) opacity(calc(1 - var(--daylight,0) * .55))}
+:root:has(#journey[data-photo-motion="gpu"]) .solar-system .hero-sigil::after{content:"";display:block;position:absolute;inset:-22% -26%;z-index:-1;
+  pointer-events:none;border:0;border-radius:50%;animation:none;filter:blur(10px);opacity:var(--daylight,0);
+  background:radial-gradient(ellipse closest-side,rgba(255,255,255,.80) 20%,rgba(240,234,255,.55) 48%,rgba(226,214,255,.22) 72%,transparent 100%)}
+/* v33 (E8-12): planets are harder to see in daylight. They wash out with the
+   same --daylight value as the sky (still faintly visible at full day) and
+   return to full strength at night. Earth, the Sun and the Moon are unchanged.
+   The 2D fallback keeps a night sky, so it only dims them slightly. */
+.solar-body[data-planet]:not([data-planet="Earth"]) .planet-model{opacity:calc(1 - var(--daylight,0) * .3);transition:opacity .4s linear}
+:root:has(#journey[data-photo-motion="gpu"]) .solar-body[data-planet]:not([data-planet="Earth"]) .planet-model{opacity:calc(1 - var(--daylight,0) * .62)}
